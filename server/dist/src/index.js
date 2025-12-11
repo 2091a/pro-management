@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     res.send("This is home route");
 });
 app.use("/projects", projectsRoutes_1.default);
-app.use("/task", taskRoutes_1.default);
+app.use("/tasks", taskRoutes_1.default);
 /*SERVER*/
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

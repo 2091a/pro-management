@@ -25,7 +25,7 @@ app.get("/" ,(req,res)=>{
 })
 
 app.use("/projects", projectRoutes)
-app.use("/task",taskRoutes)
+app.use("/tasks",taskRoutes)
 
 
 /*SERVER*/

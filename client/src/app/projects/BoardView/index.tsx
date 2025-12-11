@@ -22,13 +22,34 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
   const moveTask = (taskId: number, toStatus: string) => {
     updateTaskStatus({ taskId, status: toStatus });
   };
+  console.log(id,"----------");
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred while fetching tasks</div>;
+  if (error) {
+  console.log("RTK ERROR:", error);
+
+  let errorMessage = "Unknown error";
+
+  if ("status" in error) {
+    // FetchBaseQueryError
+    errorMessage =
+      typeof error.data === "string"
+        ? error.data
+        : JSON.stringify(error.data);
+  } else {
+    // SerializedError
+    errorMessage = error.message || "Something went wrong";
+  }
+
+  return <div>Error: {errorMessage}</div>;
+}
+
 
   return (
+    
     <DndProvider backend={HTML5Backend}>
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
+          
         {taskStatus.map((status) => (
           <TaskColumn
             key={status}
@@ -81,6 +102,7 @@ const TaskColumn = ({
       className={`sl:py-4 rounded-lg py-2 xl:px-2 ${isOver ? "bg-blue-100 dark:bg-neutral-950" : ""}`}
     >
       <div className="mb-3 flex w-full">
+ 
         <div
           className={`w-2 !bg-[${statusColor[status]}] rounded-s-lg`}
           style={{ backgroundColor: statusColor[status] }}
